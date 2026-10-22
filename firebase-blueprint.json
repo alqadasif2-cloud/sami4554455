@@ -1,0 +1,379 @@
+{
+  "entities": {
+    "CommunityUser": {
+      "title": "CommunityUser",
+      "description": "Dynamic cloud user account with role (owner, moderator, user), password, avatar, and verified channels",
+      "type": "object",
+      "properties": {
+        "id": { "type": "integer" },
+        "username": { "type": "string" },
+        "displayName": { "type": "string" },
+        "password": { "type": "string" },
+        "role": { "type": "string", "enum": ["owner", "moderator", "user"] },
+        "avatarUrl": { "type": "string" },
+        "verifiedChannels": { "type": "object" },
+        "warningsCount": { "type": "integer" },
+        "createdAt": { "type": "integer" },
+        "updatedAt": { "type": "integer" }
+      },
+      "required": ["id", "username", "displayName", "password", "role"]
+    },
+    "CommunityChannel": {
+      "title": "CommunityChannel",
+      "description": "Cloud channel managed by Owner Sami with independent password, image, and allowed memberIds",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "password": { "type": "string" },
+        "memberIds": { "type": "array" },
+        "visibility": { "type": "string", "enum": ["visible", "hidden"] },
+        "allowedMemberIds": { "type": "array" },
+        "createdBy": { "type": "integer" },
+        "createdAt": { "type": "integer" },
+        "updatedAt": { "type": "integer" }
+      },
+      "required": ["id", "name", "password", "memberIds"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Channel chat message with sender role, avatar, image, or document file attachment",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "channelId": { "type": "string" },
+        "senderId": { "type": "integer" },
+        "senderName": { "type": "string" },
+        "senderRole": { "type": "string" },
+        "senderAvatarUrl": { "type": "string" },
+        "text": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "storagePath": { "type": "string" },
+        "fileName": { "type": "string" },
+        "fileSize": { "type": "integer" },
+        "fileType": { "type": "string" },
+        "fileUrl": { "type": "string" },
+        "isEdited": { "type": "boolean" },
+        "isDeleted": { "type": "boolean" },
+        "deletedAt": { "type": "integer" },
+        "deletedBy": { "type": "integer" },
+        "replyToId": { "type": "string" },
+        "replyToSenderName": { "type": "string" },
+        "replyToText": { "type": "string" },
+        "replyToIsDeleted": { "type": "boolean" },
+        "timestamp": { "type": "integer" },
+        "updatedAt": { "type": "integer" }
+      },
+      "required": ["id", "senderId", "senderName", "timestamp"]
+    },
+    "PrivateMessage": {
+      "title": "PrivateMessage",
+      "description": "Permanent private message between Owner Sami and any user or moderator",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "participantId": { "type": "integer" },
+        "participantName": { "type": "string" },
+        "senderId": { "type": "integer" },
+        "senderName": { "type": "string" },
+        "senderRole": { "type": "string" },
+        "senderAvatarUrl": { "type": "string" },
+        "receiverId": { "type": "integer" },
+        "text": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "storagePath": { "type": "string" },
+        "fileName": { "type": "string" },
+        "fileSize": { "type": "integer" },
+        "fileType": { "type": "string" },
+        "fileUrl": { "type": "string" },
+        "isReport": { "type": "boolean" },
+        "isEdited": { "type": "boolean" },
+        "isDeleted": { "type": "boolean" },
+        "deletedAt": { "type": "integer" },
+        "deletedBy": { "type": "integer" },
+        "replyToId": { "type": "string" },
+        "replyToSenderName": { "type": "string" },
+        "replyToText": { "type": "string" },
+        "replyToIsDeleted": { "type": "boolean" },
+        "timestamp": { "type": "integer" },
+        "updatedAt": { "type": "integer" }
+      },
+      "required": ["id", "participantId", "senderId", "receiverId", "timestamp"]
+    },
+    "UserWarning": {
+      "title": "UserWarning",
+      "description": "Warning or kick record issued by Moderator or Owner",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "channelId": { "type": "string" },
+        "channelName": { "type": "string" },
+        "targetUserId": { "type": "integer" },
+        "targetUserName": { "type": "string" },
+        "issuedById": { "type": "integer" },
+        "issuedByName": { "type": "string" },
+        "issuedByRole": { "type": "string" },
+        "reason": { "type": "string" },
+        "warningNumber": { "type": "integer" },
+        "evidenceImageUrl": { "type": "string" },
+        "actionType": { "type": "string" },
+        "timestamp": { "type": "integer" }
+      },
+      "required": ["id", "targetUserId", "issuedById", "timestamp"]
+    },
+    "CommunityNotification": {
+      "title": "CommunityNotification",
+      "description": "Targeted notification for channel messages from Sami/Moderators and private messages",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" },
+        "title": { "type": "string" },
+        "body": { "type": "string" },
+        "senderId": { "type": "integer" },
+        "senderName": { "type": "string" },
+        "senderRole": { "type": "string" },
+        "senderAvatarUrl": { "type": "string" },
+        "channelId": { "type": "string" },
+        "channelName": { "type": "string" },
+        "chatType": { "type": "string" },
+        "messageId": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "privateChatWithUserId": { "type": "integer" },
+        "partnerId": { "type": "integer" },
+        "targetUserIds": { "type": "array" },
+        "timestamp": { "type": "integer" }
+      },
+      "required": ["id", "title", "senderId", "targetUserIds", "timestamp"]
+    },
+    "MediaFile": {
+      "title": "MediaFile",
+      "description": "Cloud image storage object for avatars, channel icons, chat, and trade attachments",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "dataUrl": { "type": "string" },
+        "folder": { "type": "string" },
+        "uploaderId": { "type": "integer" },
+        "createdAt": { "type": "integer" }
+      },
+      "required": ["id", "dataUrl", "createdAt"]
+    },
+    "UserChallengeData": {
+      "title": "UserChallengeData",
+      "description": "Permanent per-user cloud data including active challenge, settings, trade counts, trades, and 150 milestones",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "integer" },
+        "username": { "type": "string" },
+        "challenge": { "type": "object" },
+        "completedTradesCount": { "type": "integer" },
+        "failedTradesCount": { "type": "integer" },
+        "remainingTradesCount": { "type": "integer" },
+        "trades": { "type": "array" },
+        "milestones": { "type": "array" },
+        "updatedAt": { "type": "integer" }
+      },
+      "required": ["userId", "challenge", "trades", "updatedAt"]
+    },
+    "AppUpdateConfig": {
+      "title": "AppUpdateConfig",
+      "description": "Dynamic cloud configuration for app updates managed by Owner Sami",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "versionName": { "type": "string" },
+        "versionCode": { "type": "integer" },
+        "downloadUrl": { "type": "string" },
+        "description": { "type": "string" },
+        "isMandatory": { "type": "boolean" },
+        "updatedAt": { "type": "integer" }
+      },
+      "required": ["versionName", "versionCode", "downloadUrl", "isMandatory"]
+    },
+    "SubscriptionPlan": {
+      "title": "SubscriptionPlan",
+      "description": "Dynamic cloud subscription plan details, pricing, payment methods, limits, and full terms",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "price": { "type": "number" },
+        "currency": { "type": "string" },
+        "shortDescription": { "type": "string" },
+        "fullDescription": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "walletAddress": { "type": "string" },
+        "walletLink": { "type": "string" },
+        "depositNetwork": { "type": "string" },
+        "features": { "type": "array" },
+        "paymentMethods": { "type": "array" },
+        "allowsInstallments": { "type": "boolean" },
+        "installmentMinimum": { "type": "number" },
+        "durationDays": { "type": "integer" },
+        "maxSubscribers": { "type": "integer" },
+        "enrolledCount": { "type": "integer" },
+        "isActive": { "type": "boolean" },
+        "status": { "type": "string", "enum": ["active", "closed", "paused"] },
+        "closedMessage": { "type": "string" },
+        "termsTitle": { "type": "string" },
+        "termsItems": { "type": "array" },
+        "termsFullText": { "type": "string" },
+        "termsVersion": { "type": "integer" },
+        "paymentInstructions": { "type": "string" },
+        "ownerNotes": { "type": "string" },
+        "publishedAt": { "type": "integer" },
+        "updatedAt": { "type": "integer" },
+        "updatedBy": { "type": "integer" }
+      },
+      "required": ["id", "name", "price", "currency", "updatedAt", "updatedBy"]
+    },
+    "SubscriptionAuditLog": {
+      "title": "SubscriptionAuditLog",
+      "description": "Audit trail log of changes to subscription configurations made by Owner Sami",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "subscriptionId": { "type": "string" },
+        "subscriptionName": { "type": "string" },
+        "changeType": { "type": "string" },
+        "summary": { "type": "string" },
+        "previousData": { "type": "object" },
+        "newData": { "type": "object" },
+        "changedBy": { "type": "integer" },
+        "changedByName": { "type": "string" },
+        "timestamp": { "type": "integer" }
+      },
+      "required": ["id", "subscriptionId", "changeType", "timestamp", "changedBy"]
+    },
+    "SubscriptionConsent": {
+      "title": "SubscriptionConsent",
+      "description": "User consent and terms agreement records tied to specific terms versions",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "integer" },
+        "userName": { "type": "string" },
+        "subscriptionId": { "type": "string" },
+        "subscriptionName": { "type": "string" },
+        "termsVersion": { "type": "integer" },
+        "agreedAt": { "type": "integer" },
+        "timestamp": { "type": "integer" },
+        "status": { "type": "string" }
+      },
+      "required": ["id", "userId", "subscriptionId", "termsVersion", "timestamp"]
+    },
+    "GuestIdentity": {
+      "title": "GuestIdentity",
+      "description": "Persistent anonymous guest account with dedicated guest number, internal ID, and secret token",
+      "type": "object",
+      "properties": {
+        "guestId": { "type": "string" },
+        "guestNumber": { "type": "integer" },
+        "displayName": { "type": "string" },
+        "secretToken": { "type": "string" },
+        "isBlocked": { "type": "boolean" },
+        "createdAt": { "type": "integer" },
+        "lastActiveAt": { "type": "integer" }
+      },
+      "required": ["guestId", "guestNumber", "displayName", "secretToken", "createdAt"]
+    },
+    "GuestSupportConfig": {
+      "title": "GuestSupportConfig",
+      "description": "Configuration for moderators allowed to receive guest messages and default moderator",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "enabledModeratorIds": { "type": "array" },
+        "defaultModeratorId": { "type": "integer" },
+        "isSupportEnabled": { "type": "boolean" },
+        "updatedAt": { "type": "integer" },
+        "updatedBy": { "type": "integer" }
+      },
+      "required": ["id", "enabledModeratorIds", "updatedAt", "updatedBy"]
+    },
+    "UserFcmToken": {
+      "title": "UserFcmToken",
+      "description": "FCM device registration token for cloud messaging push notifications",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "token": { "type": "string" },
+        "userId": { "type": "integer" },
+        "username": { "type": "string" },
+        "platform": { "type": "string" },
+        "deviceModel": { "type": "string" },
+        "createdAt": { "type": "integer" },
+        "updatedAt": { "type": "integer" }
+      },
+      "required": ["token", "userId", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/community_users/{userId}": {
+      "schema": { "$ref": "#/entities/CommunityUser" },
+      "description": "Dynamic user accounts, roles, passwords, avatars, and verified channels"
+    },
+    "/community_channels/{channelId}": {
+      "schema": { "$ref": "#/entities/CommunityChannel" },
+      "description": "Dynamic channels created by Owner Sami"
+    },
+    "/chat_messages/{messageId}": {
+      "schema": { "$ref": "#/entities/ChatMessage" },
+      "description": "Channel messages automatically purged after 48 hours"
+    },
+    "/private_messages/{messageId}": {
+      "schema": { "$ref": "#/entities/PrivateMessage" },
+      "description": "Permanent private messages between Sami and users/moderators"
+    },
+    "/user_warnings/{warningId}": {
+      "schema": { "$ref": "#/entities/UserWarning" },
+      "description": "Warnings and channel kick records"
+    },
+    "/community_notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/CommunityNotification" },
+      "description": "Real-time notifications targeted to channel members or private chat recipients"
+    },
+    "/media_files/{mediaId}": {
+      "schema": { "$ref": "#/entities/MediaFile" },
+      "description": "Cloud storage for uploaded avatars, channel images, chat images, and trade images"
+    },
+    "/user_challenges/{userId}": {
+      "schema": { "$ref": "#/entities/UserChallengeData" },
+      "description": "Permanent per-user isolated trading challenge, settings, trades, and 150 milestones"
+    },
+    "/app_updates/{configId}": {
+      "schema": { "$ref": "#/entities/AppUpdateConfig" },
+      "description": "App update configuration with latest version, download link, changelog, and mandatory/optional flag"
+    },
+    "/subscription_plans/{planId}": {
+      "schema": { "$ref": "#/entities/SubscriptionPlan" },
+      "description": "Published subscription plans and channel terms and pricing"
+    },
+    "/subscription_audit_logs/{logId}": {
+      "schema": { "$ref": "#/entities/SubscriptionAuditLog" },
+      "description": "Audit records for subscription changes"
+    },
+    "/subscription_consents/{consentId}": {
+      "schema": { "$ref": "#/entities/SubscriptionConsent" },
+      "description": "User agreements to subscription terms versions"
+    },
+    "/guest_identities/{guestId}": {
+      "schema": { "$ref": "#/entities/GuestIdentity" },
+      "description": "Persistent guest profiles with assigned sequential numbers"
+    },
+    "/guest_support_config/{configId}": {
+      "schema": { "$ref": "#/entities/GuestSupportConfig" },
+      "description": "Moderator availability settings for guest support"
+    },
+    "/counters/{counterId}": {
+      "schema": { "$ref": "#/entities/GuestIdentity" },
+      "description": "Atomic system counters for guest numbers"
+    },
+    "/user_fcm_tokens/{tokenId}": {
+      "schema": { "$ref": "#/entities/UserFcmToken" },
+      "description": "FCM device registration tokens for background and locked notifications"
+    }
+  }
+}
